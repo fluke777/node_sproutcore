@@ -1,0 +1,38 @@
+--- 
+/Users/tomas/sandbox/comet/apps/comet/resources/main_page.js: 
+  scan_source: 
+    mtime: 1270149425
+    value: []
+
+/Users/tomas/sandbox/comet/apps/comet/resources/loading.rhtml: 
+  scan_source: 
+    mtime: 1270147931
+    value: []
+
+/Users/tomas/sandbox/comet/apps/comet/main.js: 
+  scan_source: 
+    mtime: 1270155721
+    value: []
+
+/Users/tomas/sandbox/comet/apps/comet/core.js: 
+  scan_source: 
+    mtime: 1270147931
+    value: []
+
+/Users/tomas/sandbox/comet/apps/comet/fixtures/message.js: 
+  scan_source: 
+    mtime: 1270155742
+    value: 
+    - - sc_require
+      - "'"
+      - models/message
+/Users/tomas/sandbox/comet/apps/comet/models/message.js: 
+  scan_source: 
+    mtime: 1270147967
+    value: []
+
+/Users/tomas/sandbox/comet/apps/comet/controllers/messagess.js: 
+  scan_source: 
+    mtime: 1270148494
+    value: []
+

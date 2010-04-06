@@ -1,0 +1,7 @@
+=============================================================================
+Project:   Comet
+Copyright: ©2010 My Company, Inc.
+=============================================================================
+
+This is a simple Sproutcore project, that is using a long polling comet server written in NodeJS. It is supposed to accompany the article published on http://svarovsky-tomas.com/nodejs-sproutcore.html
+
