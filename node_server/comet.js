@@ -1,9 +1,10 @@
 var sys = require('sys'), 
    http = require('http'),
+   events = require('events'),
    repl = require('repl');
 
 messages = [];
-message_queue = new process.EventEmitter();
+message_queue = new events.EventEmitter();
 
 
 addMessage = function(message) {
@@ -37,34 +38,35 @@ routeToAction = function(route, req, res) {
 addMesssageAction = function(req, res) {
   var message = req.url.split('?')[1];
   
-  res.sendHeader(201, {'Content-Type': 'text/plain', "Connection": 'Close'});
+  res.writeHead(201, {'Content-Type': 'text/plain', "Connection": 'Close'});
   
   addMessage(message);
-  res.finish();
+  res.end();
   
 };
 
 getMessagesAction = function(req, res) {
   var lastTimeAsked = req.url.split('?')[1];
   
-  res.sendHeader(200, {'Content-Type': 'text/plain', "Connection": 'Close'});
+  res.writeHead(200, {'Content-Type': 'text/plain', "Connection": 'Close'});
   var m = getMessagesSince(lastTimeAsked);
   if (m.length) {
-      res.sendBody(JSON.stringify(m));
-      res.finish();
+      res.write(JSON.stringify(m));
+      res.end();
   } else {
-      var timeout = setTimeout(function() {
-          res.sendBody(JSON.stringify([]));
-          res.finish();
-          message_queue.removeListener('newMessage', listener);
-      }, 10000);
-      var listener = message_queue.addListener("newMessage", function(e) {
+      var messageHandler = function(e) {
           var m = getMessagesSince(lastTimeAsked);
-          res.sendBody(JSON.stringify(m));
-          res.finish();
+          res.write(JSON.stringify(m));
+          res.end();
           clearTimeout(timeout);
-          message_queue.removeListener('newMessage', listener);
-      });
+          message_queue.removeListener('newMessage', messageHandler);
+      };
+      var timeout = setTimeout(function() {
+          res.write(JSON.stringify([]));
+          res.end();
+          message_queue.removeListener('newMessage', messageHandler);
+      }, 10000);
+      var listener = message_queue.addListener("newMessage", messageHandler);
   }
 };
 
